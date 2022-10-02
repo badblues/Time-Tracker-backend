@@ -6,6 +6,6 @@ import badblues.timetracker.model.Employee;
 
 
 @Repository
-public interface EmployeeRepository extends JpaRepository<User, Integer> {
-
+public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
+ 
 }

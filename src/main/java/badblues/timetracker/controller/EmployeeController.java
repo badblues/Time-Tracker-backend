@@ -5,24 +5,24 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
-import badblues.timetracker.model.User;
-import badblues.timetracker.service.UserService;
+import badblues.timetracker.model.Employee;
+import badblues.timetracker.service.EmployeeService;
 
 
 @RestController
 @RequestMapping("timetracker")
-public class UserController {
+public class EmployeeController {
 
-    private final UserService userService;
+    private final EmployeeService employeeService;
 
     @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
     }
 
     @GetMapping
-    public List<User> hello() {
-        return userService.getUsers();
+    public List<Employee> hello() {
+        return employeeService.getEmployees();
     }
 
 }

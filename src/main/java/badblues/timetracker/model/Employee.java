@@ -1,14 +1,11 @@
 package badblues.timetracker.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
+import java.util.ArrayList;
 
-@Entity
-@Table
+@Entity(name = "Employee")
+@Table(name = "employee")
 public class Employee {    
 
     @Id
@@ -22,13 +19,22 @@ public class Employee {
         generator = "employee_sequence"
     )
 
-    private int id;
+    @Column(updatable = false)
+    private long id;
+    
+    @Column(nullable = false)
     private String name;
+
+
+    @OneToMany(
+            mappedBy = "employee"
+    )
+    private List<Task> tasks = new ArrayList<>();
      
     public Employee () {
     }
 
-    public Employee (int id, String name) {
+    public Employee (long id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -37,7 +43,7 @@ public class Employee {
         this.name = name;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -45,16 +51,11 @@ public class Employee {
         return name;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
     public void setName(String name) {
         this.name = name;
     }
-
-    public String toString() {
-        return "Employee: id = " + id + " name = " + name; 
-    }
-
 }

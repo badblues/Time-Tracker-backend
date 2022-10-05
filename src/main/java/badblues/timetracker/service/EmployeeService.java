@@ -1,4 +1,4 @@
-package badblues.timetracker.service;
+    package badblues.timetracker.service;
 
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -18,6 +18,17 @@ public class EmployeeService {
 
     public List<Employee> getEmployees() {
         return employeeRepository.findAll();
+    }
+
+    public Employee getEmployee(String name) {
+        System.out.println("OKAYYYYYYYYYYYYYYY " + name);
+        List<Employee> list = employeeRepository.findAll();
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println("testin " + list.get(i).getName());
+            if (list.get(i).getName().equals(name))
+                return list.get(i);
+        }
+        return null;
     }
 
 }

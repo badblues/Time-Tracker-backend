@@ -1,7 +1,9 @@
 package badblues.timetracker.model;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 
 @Entity
 @Table(name = "task")
@@ -25,9 +27,9 @@ public class Task {
     private String taskName;
     private String taskDescription;
     @Transient
-    private Date startDate;
+    private LocalDateTime startDate;
     @Transient
-    private Date endDate;
+    private LocalDateTime endDate;
 
     @ManyToOne
     @JoinColumn(
@@ -40,8 +42,7 @@ public class Task {
     public Task(String taskName, String taskDescription) {
         this.taskName = taskName;
         this.taskDescription = taskDescription;
-        //TODO
-        //this.startDate = ...
+        this.startDate = LocalDateTime.now();
     }
 
     public long getId() {
@@ -56,11 +57,11 @@ public class Task {
         return taskDescription;
     }
 
-    public Date getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     } 
 
-    public Date getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
@@ -76,11 +77,11 @@ public class Task {
         this.taskDescription = taskDescription;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 }

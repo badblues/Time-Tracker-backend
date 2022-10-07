@@ -5,7 +5,11 @@ import java.util.List;
 import java.util.ArrayList;
 
 @Entity(name = "Employee")
-@Table(name = "employee")
+@Table(name = "employee",
+       uniqueConstraints = {
+           @UniqueConstraint(name = "employee_name_unique",
+                             columnNames = "name")
+       })
 public class Employee {    
 
     @Id
@@ -27,6 +31,7 @@ public class Employee {
 
 
     @OneToMany(
+            cascade = {CascadeType.ALL},
             mappedBy = "employee"
     )
     private List<Task> tasks = new ArrayList<>();

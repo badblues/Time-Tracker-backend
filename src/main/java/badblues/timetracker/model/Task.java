@@ -26,22 +26,23 @@ public class Task {
 
     private String taskName;
     private String taskDescription;
-    @Transient
     private LocalDateTime startDate;
-    @Transient
     private LocalDateTime endDate;
 
     @ManyToOne
+    @MapsId("employee_id")
     @JoinColumn(
         name="employee_id",
         nullable=false,
         foreignKey = @ForeignKey(name="employee_id_fk")
         )
+
     private Employee employee;
 
-    public Task(String taskName, String taskDescription) {
+    public Task(Employee employee, String taskName, String taskDescription) {
         this.taskName = taskName;
         this.taskDescription = taskDescription;
+        this.employee = employee;
         this.startDate = LocalDateTime.now();
     }
 
@@ -63,6 +64,10 @@ public class Task {
 
     public LocalDateTime getEndDate() {
         return endDate;
+    }
+
+    public Employee getEmployee() {
+        return employee;
     }
 
     public void setId(long id) {

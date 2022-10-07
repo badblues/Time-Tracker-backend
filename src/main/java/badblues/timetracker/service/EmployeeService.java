@@ -2,6 +2,7 @@
 
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import badblues.timetracker.model.Employee;
 import badblues.timetracker.repository.EmployeeRepository;
@@ -20,14 +21,23 @@ public class EmployeeService {
         return employeeRepository.findAll();
     }
 
+    public Employee createEmployee(Employee employee) {
+        return employeeRepository.save(employee);
+    }
+
     public Employee getEmployee(String name) {
-        System.out.println("OKAYYYYYYYYYYYYYYY " + name);
         List<Employee> list = employeeRepository.findAll();
         for (int i = 0; i < list.size(); i++) {
-            System.out.println("testin " + list.get(i).getName());
             if (list.get(i).getName().equals(name))
                 return list.get(i);
         }
+        return null;
+    }
+
+    public Employee getEmployee(Long id) {
+        Optional <Employee> opt = employeeRepository.findById(id);
+        if (opt.isPresent())
+            return opt.get(); 
         return null;
     }
 

@@ -30,19 +30,19 @@ public class Task {
     private LocalDateTime endDate;
 
     @ManyToOne
-    @MapsId("employee_id")
     @JoinColumn(
         name="employee_id",
-        nullable=false,
+        nullable=true,
         foreignKey = @ForeignKey(name="employee_id_fk")
         )
 
     private Employee employee;
 
-    public Task(Employee employee, String taskName, String taskDescription) {
+    public Task() {}
+
+    public Task(String taskName, String taskDescription) {
         this.taskName = taskName;
         this.taskDescription = taskDescription;
-        this.employee = employee;
         this.startDate = LocalDateTime.now();
     }
 

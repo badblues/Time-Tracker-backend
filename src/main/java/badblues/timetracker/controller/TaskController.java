@@ -8,7 +8,7 @@ import badblues.timetracker.model.Employee;
 import badblues.timetracker.service.TaskService;
 
 @RestController
-@RequestMapping(value = "timetracker")
+@RequestMapping(value = "timetracker/task")
 public class TaskController {
 
     private final TaskService taskService;
@@ -18,16 +18,16 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-    // @GetMapping(value="{id}/task")
-    // public List<Employee> getEmployees(@RequestParam(name="name", required=false) String name) {
-    //     if (name != null) {
-    //         Employee emp = taskService.getEmployee(name);
-    //         return emp != null ? List.of(emp) : null;
-    //     }
-    //     return taskService.getTasks();
-    // }
+    @GetMapping(value="")
+    public List<Task> getTasks(@RequestParam(name="name", required=false) String name) {
+        if (name != null) {
+            Task task = taskService.getTask(name);
+            return task != null ? List.of (task) : null;
+        }
+        return taskService.getTasks();
+    }
 
-    @PostMapping(value="task")
+    @PostMapping(value="")
     public Task postTask(@RequestBody Task task) {
         Task createdTask = taskService.createTask(task);       
         return createdTask; 

@@ -35,8 +35,18 @@ public class EmployeeController {
 
     @PostMapping(value="")
     public Employee postEmployee(@RequestBody Employee employee) {
-        Employee createdEmployee = employeeService.createEmployee(employee);       
+        Employee createdEmployee = employeeService.createEmployee(employee);
         return createdEmployee; 
     }
+
+    @PutMapping(path="{employeeId}")
+    public Employee putEmployee(@PathVariable("employeeId") Long id, @RequestBody Employee employee) {
+        return employeeService.editEmployee(employee, id);
+    }
+
+    // @PutMapping(value="{employeeId}/tasks")
+    // public Employee putEmployee(@PathVariable("employeeId") Long id, @RequestBody Employee employee) {
+    //     return employeeService.editEmployee(employee, id);
+    // }
 
 }

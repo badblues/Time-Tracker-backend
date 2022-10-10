@@ -41,4 +41,14 @@ public class EmployeeService {
         return null;
     }
 
+    public Employee editEmployee(Employee newEmployee, Long id) {
+        return employeeRepository.findById(id).map(employee -> {
+            employee.setName(newEmployee.getName());
+            return employeeRepository.save(employee);
+        }).orElseGet(() -> {
+            newEmployee.setId(id);
+            return employeeRepository.save(newEmployee);
+        });
+    }
+
 }

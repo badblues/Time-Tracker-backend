@@ -18,13 +18,18 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-    @GetMapping(value="")
+    @GetMapping(value="all")
     public List<Task> getTasks(@RequestParam(name="name", required=false) String name) {
         if (name != null) {
             Task task = taskService.getTask(name);
             return task != null ? List.of (task) : null;
         }
         return taskService.getTasks();
+    }
+
+    @GetMapping(path="{taskId}")
+    public Task getTask(@PathVariable("taskId") Long id) {
+        return taskService.getTask(id);
     }
 
     @PostMapping(value="")

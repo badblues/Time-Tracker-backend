@@ -25,6 +25,10 @@ public class EmployeeService {
         return employeeRepository.save(employee);
     }
 
+    public Employee save(Employee employee) {
+        return employeeRepository.save(employee);
+    }
+
     public Employee getEmployee(String name) {
         List<Employee> list = employeeRepository.findAll();
         for (int i = 0; i < list.size(); i++) {

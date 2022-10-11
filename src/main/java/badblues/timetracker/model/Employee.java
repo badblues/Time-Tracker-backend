@@ -56,6 +56,10 @@ public class Employee {
         return name;
     }
 
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
     public void setId(long id) {
         this.id = id;
     }

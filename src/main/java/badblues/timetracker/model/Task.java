@@ -3,6 +3,7 @@ package badblues.timetracker.model;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -30,12 +31,12 @@ public class Task {
     private LocalDateTime endDate;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(
         name="employee_id",
         nullable=true,
         foreignKey = @ForeignKey(name="employee_id_fk")
         )
-
     private Employee employee;
 
     public Task() {}
@@ -88,5 +89,9 @@ public class Task {
 
     public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 }

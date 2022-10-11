@@ -2,6 +2,7 @@
 
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import badblues.timetracker.model.Task;
 import badblues.timetracker.repository.TaskRepository;
@@ -25,7 +26,18 @@ public class TaskService {
         return taskRepository.findAll();
     }
 
+    public Task getTask(Long id) {
+        Optional <Task> opt = taskRepository.findById(id);
+        if (opt.isPresent())
+            return opt.get(); 
+        return null;
+    }
+
     public Task createTask(Task task) {
+        return taskRepository.save(task);
+    }
+
+    public Task save(Task task) {
         return taskRepository.save(task);
     }
 

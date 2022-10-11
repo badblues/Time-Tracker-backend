@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.Optional;
 import badblues.timetracker.model.Employee;
+import badblues.timetracker.model.Task;
 import badblues.timetracker.service.EmployeeService;
+import badblues.timetracker.service.TaskService;
 
 
 @RestController
@@ -13,10 +15,12 @@ import badblues.timetracker.service.EmployeeService;
 public class EmployeeController {
 
     private final EmployeeService employeeService;
+    private final TaskService taskService;
 
     @Autowired
-    public EmployeeController(EmployeeService employeeService) {
+    public EmployeeController(EmployeeService employeeService, TaskService taskService) {
         this.employeeService = employeeService;
+        this.taskService = taskService;
     }
 
     @GetMapping(value="all")
@@ -39,14 +43,16 @@ public class EmployeeController {
         return createdEmployee; 
     }
 
-    @PutMapping(path="{employeeId}")
-    public Employee putEmployee(@PathVariable("employeeId") Long id, @RequestBody Employee employee) {
-        return employeeService.editEmployee(employee, id);
-    }
 
-    // @PutMapping(value="{employeeId}/tasks")
-    // public Employee putEmployee(@PathVariable("employeeId") Long id, @RequestBody Employee employee) {
-    //     return employeeService.editEmployee(employee, id);
-    // }
+    @PostMapping(value="{employeeId}/tasks/{taskId}")
+    public Employee postTask(@PathVariable("employeeId") Long employeeId, @PathVariable("taskId") Long taskId) {
+        Employee employee = employeeService.getEmployee(employeeId);
+        Task task = taskService.getTask(taskId);
+        employee.getTasks().add(task);
+        task.setEmployee(employee);
+        taskService.save(task);
+        System.out.println("\n\n\n" + employee.getTasks() + "\n\n\n");
+        return employeeService.save(employee);
+    }
 
 }

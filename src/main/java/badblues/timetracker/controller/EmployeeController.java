@@ -48,6 +48,9 @@ public class EmployeeController {
         return employeeService.editEmployee(newEmployee, id);
     }
 
-    
+    @DeleteMapping(value="{employeeId}")
+    public void deleteEmployee(@PathVariable("employeeId") Long id) {
+        employeeService.deleteEmployee(id);
+    }
 
 }

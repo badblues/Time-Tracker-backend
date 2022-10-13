@@ -48,4 +48,9 @@ public class TaskController {
     public Task editTask(@PathVariable("taskId") Long id, @RequestBody Task task) {
         return taskService.editTask(task, id);
     }    
+
+    @DeleteMapping(value="{taskId}")
+    public void editTask(@PathVariable("taskId") Long id) {
+        taskService.deleteTask(id);
+    }
 }

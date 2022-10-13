@@ -21,14 +21,6 @@ public class EmployeeService {
         return employeeRepository.findAll();
     }
 
-    public Employee createEmployee(Employee employee) {
-        return employeeRepository.save(employee);
-    }
-
-    public Employee save(Employee employee) {
-        return employeeRepository.save(employee);
-    }
-
     public Employee getEmployee(String name) {
         List<Employee> list = employeeRepository.findAll();
         for (int i = 0; i < list.size(); i++) {
@@ -45,14 +37,18 @@ public class EmployeeService {
         return null;
     }
 
+    public Employee save(Employee employee) {
+        return employeeRepository.save(employee);
+    }
+
     public Employee editEmployee(Employee newEmployee, Long id) {
-        return employeeRepository.findById(id).map(employee -> {
-            employee.setName(newEmployee.getName());
-            return employeeRepository.save(employee);
-        }).orElseGet(() -> {
-            newEmployee.setId(id);
-            return employeeRepository.save(newEmployee);
-        });
+        Optional <Employee> opt = employeeRepository.findById(id);
+        if (opt.isPresent()) {
+            Employee oldEmployee = opt.get();
+            oldEmployee.setName(newEmployee.getName());
+            return employeeRepository.save(oldEmployee);
+        }
+        return null;
     }
 
 }

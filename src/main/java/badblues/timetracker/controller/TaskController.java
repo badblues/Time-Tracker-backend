@@ -6,16 +6,19 @@ import java.util.List;
 import badblues.timetracker.model.Task;
 import badblues.timetracker.model.Employee;
 import badblues.timetracker.service.TaskService;
+import badblues.timetracker.service.EmployeeService;
 
 @RestController
 @RequestMapping(value = "timetracker/task")
 public class TaskController {
 
     private final TaskService taskService;
+    private final EmployeeService employeeService;
 
     @Autowired
-    public TaskController (TaskService taskService) {
+    public TaskController (TaskService taskService, EmployeeService employeeService) {
         this.taskService = taskService;
+        this.employeeService = employeeService;
     }
 
     @GetMapping(value="all")
@@ -32,10 +35,17 @@ public class TaskController {
         return taskService.getTask(id);
     }
 
-    @PostMapping(value="")
-    public Task postTask(@RequestBody Task task) {
-        Task createdTask = taskService.createTask(task);       
-        return createdTask; 
+    @PostMapping(value="{employeeId}/task")
+    public Employee postTask(@PathVariable("employeeId") Long employeeId, @RequestBody Task task) {
+        Employee employee = employeeService.getEmployee(employeeId);
+        employee.getTasks().add(task);
+        task.setEmployee(employee);
+        taskService.save(task);
+        return employeeService.save(employee);
     }
 
+    @PutMapping(value="{taskId}")
+    public Task editTask(@PathVariable("taskId") Long id, @RequestBody Task task) {
+        return taskService.editTask(task, id);
+    }    
 }

@@ -25,8 +25,8 @@ public class Task {
     @Column(updatable = false)
     private long id;
 
-    private String taskName;
-    private String taskDescription;
+    private String name;
+    private String description;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private LocalDateTime creationDate = LocalDateTime.now();
@@ -42,21 +42,21 @@ public class Task {
 
     public Task() {}
 
-    public Task(String taskName, String taskDescription) {
-        this.taskName = taskName;
-        this.taskDescription = taskDescription;
+    public Task(String name, String description) {
+        this.name = name;
+        this.description = description;
     }
 
     public long getId() {
         return id;
     }
 
-    public String getTaskName() {
-        return taskName;
+    public String getName() {
+        return name;
     }
 
-    public String getTaskDescription() {
-        return taskDescription;
+    public String getDescription() {
+        return description;
     }
 
     public LocalDateTime getStartDate() {
@@ -75,12 +75,12 @@ public class Task {
         this.id = id;
     }
 
-    public void setTaskName(String taskName) {
-        this.taskName = taskName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setTaskDescription(String taskDescription) {
-        this.taskDescription = taskDescription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setStartDate(LocalDateTime startDate) {

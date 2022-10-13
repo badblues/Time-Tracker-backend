@@ -33,19 +33,26 @@ public class TaskService {
         return null;
     }
 
-    public Task createTask(Task task) {
-        return taskRepository.save(task);
+    public Task getTask(String name) {
+        List<Task> list = taskRepository.findAll();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getName().equals(name))
+                return list.get(i);
+        }
+        return null;
     }
 
     public Task save(Task task) {
         return taskRepository.save(task);
     }
 
-    public Task getTask(String name) {
-        List<Task> list = taskRepository.findAll();
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getTaskName().equals(name))
-                return list.get(i);
+    public Task editTask(Task newTask, Long id) {
+        Optional <Task> opt = taskRepository.findById(id);
+        if (opt.isPresent()) {
+            Task oldTask = opt.get();
+            oldTask.setName(newTask.getName());
+            oldTask.setDescription(newTask.getDescription());
+            return taskRepository.save(oldTask);
         }
         return null;
     }

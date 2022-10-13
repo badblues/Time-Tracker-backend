@@ -32,24 +32,22 @@ public class EmployeeController {
         return employeeService.getEmployees();
     }
 
-    @GetMapping(path="{employeeId}")
+    @GetMapping(value="{employeeId}")
     public Employee getEmployee(@PathVariable("employeeId") Long id) {
         return employeeService.getEmployee(id); 
     }
 
     @PostMapping(value="")
     public Employee postEmployee(@RequestBody Employee employee) {
-        Employee createdEmployee = employeeService.createEmployee(employee);
+        Employee createdEmployee = employeeService.save(employee);
         return createdEmployee; 
     }
 
-    @PostMapping(value="{employeeId}/tasks")
-    public Employee postTask(@PathVariable("employeeId") Long employeeId, @RequestBody Task task) {
-        Employee employee = employeeService.getEmployee(employeeId);
-        employee.getTasks().add(task);
-        task.setEmployee(employee);
-        taskService.save(task);
-        return employeeService.save(employee);
+    @PutMapping(value="{employeeId}")
+    public Employee putEmpoyee(@PathVariable("employeeId") Long id, @RequestBody Employee newEmployee) {
+        return employeeService.editEmployee(newEmployee, id);
     }
+
+    
 
 }

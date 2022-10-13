@@ -43,15 +43,12 @@ public class EmployeeController {
         return createdEmployee; 
     }
 
-
-    @PostMapping(value="{employeeId}/tasks/{taskId}")
-    public Employee postTask(@PathVariable("employeeId") Long employeeId, @PathVariable("taskId") Long taskId) {
+    @PostMapping(value="{employeeId}/tasks")
+    public Employee postTask(@PathVariable("employeeId") Long employeeId, @RequestBody Task task) {
         Employee employee = employeeService.getEmployee(employeeId);
-        Task task = taskService.getTask(taskId);
         employee.getTasks().add(task);
         task.setEmployee(employee);
         taskService.save(task);
-        System.out.println("\n\n\n" + employee.getTasks() + "\n\n\n");
         return employeeService.save(employee);
     }
 

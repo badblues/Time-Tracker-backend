@@ -29,6 +29,7 @@ public class Task {
     private String taskDescription;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
+    private LocalDateTime creationDate = LocalDateTime.now();
 
     @ManyToOne
     @JsonIgnore
@@ -44,7 +45,6 @@ public class Task {
     public Task(String taskName, String taskDescription) {
         this.taskName = taskName;
         this.taskDescription = taskDescription;
-        this.startDate = LocalDateTime.now();
     }
 
     public long getId() {

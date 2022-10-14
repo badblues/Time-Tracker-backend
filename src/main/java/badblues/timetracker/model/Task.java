@@ -2,6 +2,7 @@ package badblues.timetracker.model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -29,6 +30,7 @@ public class Task {
     private String description;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
+    private LocalTime duration;
     private LocalDateTime creationDate = LocalDateTime.now();
 
     @ManyToOne
@@ -54,7 +56,7 @@ public class Task {
     public String getName() {
         return name;
     }
-
+ 
     public String getDescription() {
         return description;
     }
@@ -65,6 +67,14 @@ public class Task {
 
     public LocalDateTime getEndDate() {
         return endDate;
+    }
+
+    public LocalTime getDuration() {
+        return duration;
+    }
+
+    public LocalDateTime getCreationDate() {
+        return creationDate;
     }
 
     public Employee getEmployee() {
@@ -91,7 +101,12 @@ public class Task {
         this.endDate = endDate;
     }
 
+    public void setDuration(LocalTime duration) {
+        this.duration = duration;
+    }
+
     public void setEmployee(Employee employee) {
         this.employee = employee;
     }
+
 }

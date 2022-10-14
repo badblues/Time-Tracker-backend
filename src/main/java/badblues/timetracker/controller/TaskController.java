@@ -53,4 +53,14 @@ public class TaskController {
     public void editTask(@PathVariable("taskId") Long id) {
         taskService.deleteTask(id);
     }
+
+    @GetMapping(value="{taskId}/start")
+    public Task startTask(@PathVariable("taskId") Long id) {
+        return taskService.startTask(id);
+    }
+
+    @GetMapping(value="{taskId}/end")
+    public Task endTask(@PathVariable("taskId") Long id) {
+        return taskService.endTask(id);
+    }
 }

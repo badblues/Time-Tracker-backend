@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import badblues.timetracker.model.Task;
@@ -19,8 +20,9 @@ public class TaskService {
     private final EmployeeRepository employeeRepository;
 
     @Autowired
-    public TaskService(TaskRepository taskRepository,
-                       EmployeeRepository employeeRepository) {
+    public TaskService(
+            TaskRepository taskRepository,
+            EmployeeRepository employeeRepository) {
         this.taskRepository = taskRepository;
         this.employeeRepository = employeeRepository;
     }
@@ -44,6 +46,18 @@ public class TaskService {
         }
         return null;
     }
+
+    public List<Task> getTask(LocalDateTime st, LocalDateTime end) {
+        List<Task> list = taskRepository.findAll();
+        List<Task> res = new ArrayList();
+        for (int i = 0; i < list.size(); i++) {
+            Task task = list.get(i);
+            if (task.getEndDate() != null && task.getEndDate().isAfter(st) && task.getEndDate().isBefore(end))
+                res.add(task);
+        }
+        return res;
+    }
+
 
     public Task save(Task task) {
         return taskRepository.save(task);

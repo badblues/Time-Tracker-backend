@@ -3,6 +3,8 @@ package badblues.timetracker.controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import badblues.timetracker.model.Task;
 import badblues.timetracker.model.Employee;
 import badblues.timetracker.service.TaskService;
@@ -22,10 +24,19 @@ public class TaskController {
     }
 
     @GetMapping(value="all")
-    public List<Task> getTasks(@RequestParam(name="name", required=false) String name) {
+    public List<Task> getTasks(
+            @RequestParam(name="name", required=false) String name,
+            @RequestParam(name="start",required=false) String startDate,
+            @RequestParam(name="end",required=false) String endDate) {
+        System.out.println("start = " + startDate + " end = " + endDate);
         if (name != null) {
             Task task = taskService.getTask(name);
             return task != null ? List.of (task) : null;
+        }
+        if (startDate != null && endDate != null) {
+            LocalDateTime st = LocalDateTime.parse(startDate, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+            LocalDateTime end = LocalDateTime.parse(endDate, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+            return taskService.getTask(st, end);
         }
         return taskService.getTasks();
     }

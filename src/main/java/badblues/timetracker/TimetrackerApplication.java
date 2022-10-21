@@ -7,8 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
-//TODO remove username and password from database properties
-//TODO http requests
    
 @SpringBootApplication
 public class TimetrackerApplication implements ApplicationRunner{

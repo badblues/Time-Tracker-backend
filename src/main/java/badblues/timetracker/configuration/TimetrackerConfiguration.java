@@ -17,12 +17,12 @@ public class TimetrackerConfiguration {
     CommandLineRunner commandLineRunner(EmployeeRepository employeeRepository, TaskRepository taskRepository) {
         return args -> {
 
-            Employee Boba = new Employee("Boba");
-            Employee Biba = new Employee("Biba");
-            Task task1 = new Task("task1", "description1");
-            task1.setEmployee(Boba);
-            Boba.getTasks().add(task1);
-            employeeRepository.saveAll(List.of(Boba, Biba));
+            Employee emp1 = new Employee("Andrew");
+            Employee emp2 = new Employee("Vladimir");
+            Task task1 = new Task("task_1", "task_1_description");
+            task1.setEmployee(emp1);
+            emp1.getTasks().add(task1);
+            employeeRepository.saveAll(List.of(emp1, emp2));
 
         }; 
     }

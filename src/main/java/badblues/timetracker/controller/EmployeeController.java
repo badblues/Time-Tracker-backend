@@ -8,6 +8,7 @@ import badblues.timetracker.model.Employee;
 import badblues.timetracker.model.Task;
 import badblues.timetracker.service.EmployeeService;
 import badblues.timetracker.service.TaskService;
+import badblues.timetracker.exception.CustomException;
 
 
 @RestController
@@ -33,8 +34,9 @@ public class EmployeeController {
     }
 
     @GetMapping(value="{employeeId}")
-    public Employee getEmployee(@PathVariable("employeeId") Long id) {
-        return employeeService.getEmployee(id); 
+    public Employee getEmployee(@PathVariable("employeeId") Long id) throws CustomException {
+        throw new CustomException("kekw");
+        //return employeeService.getEmployee(id); 
     }
 
     @PostMapping(value="")

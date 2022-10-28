@@ -8,6 +8,11 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
    
+//TODO error handling
+//TODO full stack of commands
+//TODO readme installation guide, description and commands
+//TODO make configuration and clean up
+
 @SpringBootApplication
 public class TimetrackerApplication implements ApplicationRunner{
 
@@ -21,9 +26,9 @@ public class TimetrackerApplication implements ApplicationRunner{
 	public void run(ApplicationArguments applicationArguments) throws Exception {
 			logger.debug("Debugging log");
 			logger.info("Info log");
-			logger.warn("Hey, This is a warning!");
-			logger.error("Oops! We have an Error. OK");
-			logger.fatal("Damn! Fatal error. Please fix me.");
+			logger.warn("Warning.");
+			logger.error("Error.");
+			logger.fatal("Fatal error.");
 	}
 
 }

@@ -7,8 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
-   
-//TODO error handling
+
 //TODO full stack of commands
 //TODO readme installation guide, description and commands
 //TODO make configuration and clean up

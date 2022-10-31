@@ -31,17 +31,12 @@ public class Employee {
 
 
     @OneToMany(
-            cascade = {CascadeType.ALL},
+            cascade = {CascadeType.MERGE},
             mappedBy = "employee"
     )
     private List<Task> tasks = new ArrayList<>();
      
     public Employee () {
-    }
-
-    public Employee (long id, String name) {
-        this.id = id;
-        this.name = name;
     }
 
     public Employee (String name) {

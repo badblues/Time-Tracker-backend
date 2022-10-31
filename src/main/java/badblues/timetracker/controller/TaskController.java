@@ -9,6 +9,7 @@ import badblues.timetracker.model.Task;
 import badblues.timetracker.model.Employee;
 import badblues.timetracker.service.TaskService;
 import badblues.timetracker.service.EmployeeService;
+import badblues.timetracker.exception.CustomException;
 
 @RestController
 @RequestMapping(value = "timetracker")
@@ -41,13 +42,21 @@ public class TaskController {
     }
 
     @GetMapping(path="task/{taskId}")
-    public Task getTask(@PathVariable("taskId") Long id) {
-        return taskService.getTask(id);
+    public Task getTask(@PathVariable("taskId") Long id) throws CustomException {
+        Task task = taskService.getTask(id);
+        if (task == null)
+            throw new CustomException("Task wasn't found.");
+        return task;
     }
 
     @PostMapping(value="employee/{employeeId}/task")
-    public Employee postTask(@PathVariable("employeeId") Long employeeId, @RequestBody Task task) {
+    public Employee postTask(@PathVariable("employeeId") Long employeeId, @RequestBody Task task) throws CustomException {
         Employee employee = employeeService.getEmployee(employeeId);
+        if (employee == null)
+            throw new CustomException("Employee wasn't found.");
+        for (Task tsk : taskService.getTasks())
+            if (task.getId() == tsk.getId())
+                throw new CustomException("Task id is already taken.");
         employee.getTasks().add(task);
         task.setEmployee(employee);
         taskService.save(task);
@@ -55,22 +64,36 @@ public class TaskController {
     }
 
     @PutMapping(value="task/{taskId}")
-    public Task editTask(@PathVariable("taskId") Long id, @RequestBody Task task) {
-        return taskService.editTask(task, id);
+    public Task editTask(@PathVariable("taskId") Long id, @RequestBody Task task) throws CustomException{
+        Task editedTask = taskService.editTask(task, id);
+        if (editedTask == null)
+            throw new CustomException("Task wasn't found");
+        return editedTask;
     }    
 
     @DeleteMapping(value="task/{taskId}")
-    public void editTask(@PathVariable("taskId") Long id) {
-        taskService.deleteTask(id);
+    public void editTask(@PathVariable("taskId") Long id) throws CustomException {
+        for (Task task : taskService.getTasks())
+            if (task.getId() == id) {
+                taskService.deleteTask(id);
+                return;
+            }
+        throw new CustomException("Task wasn't found");
     }
 
     @GetMapping(value="task/{taskId}/start")
-    public Task startTask(@PathVariable("taskId") Long id) {
-        return taskService.startTask(id);
+    public Task startTask(@PathVariable("taskId") Long id) throws CustomException {
+        Task startedTask = taskService.startTask(id);
+        if (startedTask == null)
+            throw new CustomException("Task wasn't found");
+        return startedTask;
     }
 
     @GetMapping(value="task/{taskId}/end")
-    public Task endTask(@PathVariable("taskId") Long id) {
-        return taskService.endTask(id);
+    public Task endTask(@PathVariable("taskId") Long id) throws CustomException {
+        Task endedTask = taskService.endTask(id);
+        if (endedTask == null) 
+            throw new CustomException("Task wasn't found");
+        return endedTask;
     }
 }

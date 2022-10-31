@@ -28,9 +28,7 @@ public class EmployeeController {
     public List<Employee> getEmployees(@RequestParam(name="name", required=false) String name) throws CustomException {
         if (name != null) {
             Employee emp = employeeService.getEmployee(name);
-            if (emp == null)
-                throw new CustomException("Employee was not found.");
-            return List.of(emp);
+            return emp != null ? List.of(emp) : null;
         }
         return employeeService.getEmployees();
     }
@@ -39,7 +37,7 @@ public class EmployeeController {
     public Employee getEmployee(@PathVariable("employeeId") Long id) throws CustomException {
         Employee employee = employeeService.getEmployee(id);
         if (employee == null)
-            throw new CustomException("Employee was not found.");
+            throw new CustomException("Employee wasn't found.");
         return employee; 
     }
 
@@ -47,7 +45,7 @@ public class EmployeeController {
     public Employee postEmployee(@RequestBody Employee employee) throws CustomException {
         for (Employee emp : employeeService.getEmployees())
             if (emp.getId() == employee.getId())
-                throw new CustomException("Id is already taken.");
+                throw new CustomException("Employee id is already taken.");
         Employee createdEmployee = employeeService.save(employee);
         return createdEmployee; 
     }
@@ -56,7 +54,7 @@ public class EmployeeController {
     public Employee putEmpoyee(@PathVariable("employeeId") Long id, @RequestBody Employee newEmployee) throws CustomException {
         Employee editedEmployee = employeeService.editEmployee(newEmployee, id);
         if (editedEmployee == null)
-            throw new CustomException("Employee was not found.");
+            throw new CustomException("Employee wasn't found.");
         return editedEmployee;
     }
 
@@ -67,7 +65,7 @@ public class EmployeeController {
                 employeeService.deleteEmployee(id);
                 return;
             }
-        throw new CustomException("Employee was not found.");
+        throw new CustomException("Employee wasn't found.");
     }
 
 }

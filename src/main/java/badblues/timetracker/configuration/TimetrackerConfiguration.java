@@ -19,7 +19,7 @@ public class TimetrackerConfiguration {
 
             Employee emp1 = new Employee("Andrew");
             Employee emp2 = new Employee("Vladimir");
-            Task task1 = new Task("task_1", "task_1_description");
+            Task task1 = new Task("task_1", "description_1");
             task1.setEmployee(emp1);
             emp1.getTasks().add(task1);
             employeeRepository.saveAll(List.of(emp1, emp2));

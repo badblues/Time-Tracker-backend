@@ -3,7 +3,7 @@
 ***
 
 ## DESCRIPTION:
-Backend part for timetracker app.
+Backend part for timetracker app. Using Spring and PostgreSQL
 ***
 
 ## HOW TO RUN: 

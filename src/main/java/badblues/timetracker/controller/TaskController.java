@@ -11,7 +11,7 @@ import badblues.timetracker.service.TaskService;
 import badblues.timetracker.service.EmployeeService;
 
 @RestController
-@RequestMapping(value = "timetracker/task")
+@RequestMapping(value = "timetracker")
 public class TaskController {
 
     private final TaskService taskService;
@@ -23,12 +23,11 @@ public class TaskController {
         this.employeeService = employeeService;
     }
 
-    @GetMapping(value="all")
+    @GetMapping(value="task/all")
     public List<Task> getTasks(
             @RequestParam(name="name", required=false) String name,
             @RequestParam(name="start",required=false) String startDate,
             @RequestParam(name="end",required=false) String endDate) {
-        System.out.println("start = " + startDate + " end = " + endDate);
         if (name != null) {
             Task task = taskService.getTask(name);
             return task != null ? List.of (task) : null;
@@ -41,12 +40,12 @@ public class TaskController {
         return taskService.getTasks();
     }
 
-    @GetMapping(path="{taskId}")
+    @GetMapping(path="task/{taskId}")
     public Task getTask(@PathVariable("taskId") Long id) {
         return taskService.getTask(id);
     }
 
-    @PostMapping(value="{employeeId}/task")
+    @PostMapping(value="employee/{employeeId}/task")
     public Employee postTask(@PathVariable("employeeId") Long employeeId, @RequestBody Task task) {
         Employee employee = employeeService.getEmployee(employeeId);
         employee.getTasks().add(task);
@@ -55,22 +54,22 @@ public class TaskController {
         return employeeService.save(employee);
     }
 
-    @PutMapping(value="{taskId}")
+    @PutMapping(value="task/{taskId}")
     public Task editTask(@PathVariable("taskId") Long id, @RequestBody Task task) {
         return taskService.editTask(task, id);
     }    
 
-    @DeleteMapping(value="{taskId}")
+    @DeleteMapping(value="task/{taskId}")
     public void editTask(@PathVariable("taskId") Long id) {
         taskService.deleteTask(id);
     }
 
-    @GetMapping(value="{taskId}/start")
+    @GetMapping(value="task/{taskId}/start")
     public Task startTask(@PathVariable("taskId") Long id) {
         return taskService.startTask(id);
     }
 
-    @GetMapping(value="{taskId}/end")
+    @GetMapping(value="task/{taskId}/end")
     public Task endTask(@PathVariable("taskId") Long id) {
         return taskService.endTask(id);
     }

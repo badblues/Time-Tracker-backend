@@ -25,34 +25,49 @@ public class EmployeeController {
     }
 
     @GetMapping(value="all")
-    public List<Employee> getEmployees(@RequestParam(name="name", required=false) String name) {
+    public List<Employee> getEmployees(@RequestParam(name="name", required=false) String name) throws CustomException {
         if (name != null) {
             Employee emp = employeeService.getEmployee(name);
-            return emp != null ? List.of(emp) : null;
+            if (emp == null)
+                throw new CustomException("Employee was not found.");
+            return List.of(emp);
         }
         return employeeService.getEmployees();
     }
 
     @GetMapping(value="{employeeId}")
     public Employee getEmployee(@PathVariable("employeeId") Long id) throws CustomException {
-        throw new CustomException("kekw");
-        //return employeeService.getEmployee(id); 
+        Employee employee = employeeService.getEmployee(id);
+        if (employee == null)
+            throw new CustomException("Employee was not found.");
+        return employee; 
     }
 
     @PostMapping(value="")
-    public Employee postEmployee(@RequestBody Employee employee) {
+    public Employee postEmployee(@RequestBody Employee employee) throws CustomException {
+        for (Employee emp : employeeService.getEmployees())
+            if (emp.getId() == employee.getId())
+                throw new CustomException("Id is already taken.");
         Employee createdEmployee = employeeService.save(employee);
         return createdEmployee; 
     }
 
     @PutMapping(value="{employeeId}")
-    public Employee putEmpoyee(@PathVariable("employeeId") Long id, @RequestBody Employee newEmployee) {
-        return employeeService.editEmployee(newEmployee, id);
+    public Employee putEmpoyee(@PathVariable("employeeId") Long id, @RequestBody Employee newEmployee) throws CustomException {
+        Employee editedEmployee = employeeService.editEmployee(newEmployee, id);
+        if (editedEmployee == null)
+            throw new CustomException("Employee was not found.");
+        return editedEmployee;
     }
 
     @DeleteMapping(value="{employeeId}")
-    public void deleteEmployee(@PathVariable("employeeId") Long id) {
-        employeeService.deleteEmployee(id);
+    public void deleteEmployee(@PathVariable("employeeId") Long id) throws CustomException {
+        for (Employee emp : employeeService.getEmployees())
+            if (emp.getId() == id) {
+                employeeService.deleteEmployee(id);
+                return;
+            }
+        throw new CustomException("Employee was not found.");
     }
 
 }
